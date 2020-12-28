@@ -1,63 +1,73 @@
 /* Refer to https://github.com/OleksiyRudenko/a-tiny-JS-world for the task details
    Complete the below for code reviewers' convenience:
 
-   Code repository: https://github.com/Harnytskyi/a-tiny-JS-world
-   Web app: https://harnytskyi.github.io/a-tiny-JS-world 
+   Code repository: https://harnytskyi.github.io/a-tiny-JS-world
+   Web app: https://github.com/Harnytskyi/a-tiny-JS-world
    */
 
 // ======== OBJECTS DEFINITIONS ========
-const man = {
-    species: 'human',
-    name: 'John',
-    gender: 'male',
-    legs: 2,
-    hands: 2,
-    saying: 'Hello, everybody!'
-};
-
-const woman = {
-    species: 'human',
-    name: 'Jessica',
-    gender: 'female',
-    legs: 2,
-    hands: 2,
-    saying: 'Good morning, gays!'
+class Inhabitant {
+    constructor(species, name, gender, saying) {
+        this.species = species;
+        this.name = name;
+        this.gender = gender;
+        this.saying = saying;
+    };
+    toString() {
+        return [
+            this.saying,
+            `I am a ${this.species}.`,
+            `My name is ${this.name}.`,
+            `My gender is ${this.gender}.`
+        ].join(' ');
+    }
+}
+class Human extends Inhabitant {
+    constructor(name, gender, saying) {
+        super('human', name, gender, saying);
+        this.legs = 2;
+        this.hands = 2;
+    };
+    toString(){
+        return `{${super.toString()} I have ${this.legs} legs and ${this.hands} hands.`;
+    }
+}
+class Man extends Human {
+    constructor(name, saying) {
+        super(name, 'male', saying);
+        
+    }
+}
+class Woman extends Human {
+    constructor(name, saying) {
+        super(name, 'female', saying);
+    }
+}
+class Mammal extends Inhabitant{
+    constructor(species, name, gender, saying){
+        super(species, name, gender, saying);
+        this.paws = 4;
+    };
+    toString(){
+        return `{${super.toString()} I have ${this.paws} paws.`;
+    }
 }
 
-const cat = {
-    species: 'cat',
-    name: 'Tom',
-    gender: 'male',
-    paws: 4,
-    saying: 'Meow!'
-};
+class Dog extends Mammal {
+    constructor(name, gender) {
+        super('dog', name, gender, 'Gav');
+    }
+}
+class Cat extends Mammal {
+    constructor(name, gender) {
+        super('cat', name, gender, 'Meow');
+    }
+}
 
-const dog = {
-    species: 'dog',
-    name: 'Jerry',
-    gender: 'female',
-    paws: 4,
-    saying: 'Gav!'
-};
-
-const inhabitants = [man, woman, cat, dog];
-
-function showMessage(obj) {
-    return [
-        obj.saying,
-        `I am a ${obj.species}.`,
-        `My name is ${obj.name}.`,
-        `My gender is ${obj.gender}.`,
-        `I have ${determineExtremities(obj)}`
-    ].join(' ');
-};
-
-function determineExtremities(obj) {
-    if (obj.species == 'human')
-        return obj.legs + ' legs and ' + obj.hands + ' hands.';
-    else
-        return obj.paws + ' paws.';
-};
+const man = new Man('John', 'Hello, everybody!');
+const woman = new Woman('Jessica', 'Good morning, gays!');
+const cat = new Cat('Tom', 'male');
+const dog = new Dog('Jerry', 'female');
 
 // ======== OUTPUT ========
 /* Use print(message) for output.
@@ -68,4 +78,6 @@ function determineExtremities(obj) {
    so code reviewers might focus on a single file that is index.js.
    */
 
-inhabitants.forEach(key => print(showMessage(key)));
+const inhabitants = [man, woman, cat, dog];
+inhabitants.forEach(key => print(key));
+
