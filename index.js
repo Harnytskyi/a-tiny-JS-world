@@ -52,7 +52,6 @@ function message(obj) {
         'My gender is',
         obj.gender + '.',
         `I have`,
-
         definitionExtremities(obj)
     ];
     return infoMessage.join(' ');
